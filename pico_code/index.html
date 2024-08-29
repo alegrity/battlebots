@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pico W Control</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>Pico W Control Interface</h1>
+        <div class="joystick-container" id="joystick-container"></div>
+        <div class="vector-display">
+            <div class="vector-line" id="vector-line"></div>
+            <div class="vector-circle"></div>
+        </div>
+        <div class="slider-container">
+            <label for="slider">Slider:</label><br>
+            <input type="range" id="slider" min="0" max="100" value="0" step="1">
+        </div>
+        <div class="button-container">
+            <button id="button1">Button 1</button>
+            <button id="button2">Button 2</button>
+            <button id="button3">Button 3</button>
+            <button id="button4">Button 4</button>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

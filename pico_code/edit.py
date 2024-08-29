@@ -1,0 +1,28 @@
+import machine
+
+
+WIFI_SSID = 'PicoW_AP'
+WIFI_PASSWORD = '12345678'
+
+
+led1 = machine.Pin(15, machine.Pin.OUT)  
+led2 = machine.Pin(14, machine.Pin.OUT) 
+
+
+def joystick(joy_x, joy_y):
+    print(f'joy-x: {joy_x}; joy-y: {joy_y}')
+
+def slider(slider_value):
+        print(f'slider: {slider_value}')
+        
+def turn_on_led1():
+    led1.on()
+
+def turn_off_led1():
+    led1.off()
+
+def turn_on_led2():
+    led2.on()
+
+def turn_off_led2():
+    led2.off()
