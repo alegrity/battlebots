@@ -45,7 +45,7 @@ def start_web_server():
         print(request_str)
 
         if 'POST' in request_str:
-            parsed_data = parse_post_data(request)
+            parsed_data = parse_get_data(request)
             if '/vector' in request_str:
                 x = parsed_data.get('x', 'not received')
                 y = parsed_data.get('y', 'not received')
