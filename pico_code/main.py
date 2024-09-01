@@ -1,5 +1,6 @@
 import network
 import socket
+import time
 from edit import joystick, slider, turn_on_led1, turn_off_led1, turn_on_led2, turn_off_led2, WIFI_SSID, WIFI_PASSWORD
 
 def setup_wifi_ap():
@@ -106,5 +107,8 @@ def start_web_server():
 
         cl.close()
 
+turn_on_led1()
+time.sleep(1)
+turn_off_led1()
 setup_wifi_ap()
 start_web_server()
