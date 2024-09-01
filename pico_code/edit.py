@@ -5,7 +5,7 @@ WIFI_SSID = 'PicoW_AP'
 WIFI_PASSWORD = '12345678'
 
 
-led1 = machine.Pin(15, machine.Pin.OUT)  
+led1 = machine.Pin("LED", machine.Pin.OUT)  
 led2 = machine.Pin(14, machine.Pin.OUT) 
 
 
@@ -16,6 +16,7 @@ def slider(slider_value):
         print(f'slider: {slider_value}')
         
 def turn_on_led1():
+    print("Turning on")
     led1.on()
 
 def turn_off_led1():
@@ -26,3 +27,4 @@ def turn_on_led2():
 
 def turn_off_led2():
     led2.off()
+
