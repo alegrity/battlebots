@@ -1,16 +1,10 @@
-import network
-import socket
-import time
-from edit import joystick, slider, turn_on_led1, turn_off_led1, turn_on_led2, turn_off_led2, WIFI_SSID, WIFI_PASSWORD
+#-------------------------------------------- Imports ----------------------------------------------------------------
 
-def setup_wifi_ap():
-    ap = network.WLAN(network.AP_IF)
-    ap.active(False)
-    ap.active(True)
-    ap.config(essid=WIFI_SSID, password=WIFI_PASSWORD)
-    while not ap.active():
-        pass
-    print('Access point active:', ap.ifconfig())
+import socket
+from start import  turn_on_led1, turn_off_led1, turn_on_led2, turn_off_led2, slider, joystick
+from RobotInteractions import *
+
+#-------------------------------------------- Server -----------------------------------------------------------------
 
 def serve_file(file_path, content_type):
     try:
@@ -37,7 +31,9 @@ def start_web_server():
     s.listen(1)
     print('Listening on', addr)
 
-    while True:
+    running = True
+
+    while running:
         cl, addr = s.accept()
         print('Client connected from', addr)
         
@@ -78,6 +74,7 @@ def start_web_server():
                 x = parsed_data.get('x', 'not received')
                 y = parsed_data.get('y', 'not received')
                 joystick(x, y)
+                moveXY(x,y)
             elif '/slider' in path:
                 value = parsed_data.get('value', 'not received')
                 slider(value)
@@ -93,7 +90,11 @@ def start_web_server():
             elif '/button4' in path:
                 turn_off_led2()
                 print('Button 4 pressed - LED 2 OFF')
-
+            elif '/button5' in path:
+                running = False
+                cl.close()
+                
+                break
             if 'GET /style.css' in request_str:
                 response = serve_file('style.css', 'text/css')
             elif 'GET /script.js' in request_str:
@@ -106,9 +107,3 @@ def start_web_server():
             cl.send(response)
 
         cl.close()
-
-turn_on_led1()
-time.sleep(1)
-turn_off_led1()
-setup_wifi_ap()
-start_web_server()

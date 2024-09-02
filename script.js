@@ -97,6 +97,10 @@ document.getElementById("button4").addEventListener("click", function() {
     sendGetRequest("/button4", { state: 'pressed' });
 });
 
+document.getElementById("button5").addEventListener("click", function() {
+    sendGetRequest("/button5", { state: 'pressed' });
+});
+
 window.addEventListener('resize', () => {
     containerRect = joystickContainer.getBoundingClientRect();
 });
