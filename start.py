@@ -15,9 +15,9 @@ ONBOARD_LED.off()
 led2 = machine.Pin(14, machine.Pin.OUT) 
 
 MOTOR_PINS = {
-    "Motor 1" : [4,3,2],
+    "Motor 1" : [5,3,2],
     "Motor 2" : [],
-    "Servo 1" : [5],
+    "Servo 1" : [6],
     "DC 1": [],
 }
 

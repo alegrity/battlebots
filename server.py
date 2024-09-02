@@ -77,6 +77,7 @@ def start_web_server():
                 moveXY(x,y)
             elif '/slider' in path:
                 value = parsed_data.get('value', 'not received')
+                swingArm(value)
                 slider(value)
             elif '/button1' in path:
                 turn_on_led1()

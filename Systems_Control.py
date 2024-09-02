@@ -32,15 +32,18 @@ def convertSpeed(speed):
     if speed <= 65535: return speed 
     elif speed > 65535: return 65535
 
-def MG995_servoControl(angleval, motor: str, wait):
+def MG995_servoControl(angleval, motor: str, wait, Center:bool):
     pins = MOTOR_PINS[motor]
-    angleval = convertDuty(angleval)
+    if Center: angleval = convertDutyCentered(angleval, 4680, 3276)
+    else: angleval = convertDuty(angleval, 1639, 8191)
     print(angleval)
     angle = m.PWM(m.Pin(pins[0]))
     angle.freq(50)
     angle.duty_u16(angleval)
     time.sleep_ms(wait)
-    angle.deinit()
 
-def convertDuty(angle):
-    return int((3031*angle)+4833)
+def convertDutyCentered(angle, center, offset):
+    return int(abs((offset*angle)+center))
+
+def convertDuty(angle, zero, maximum):
+    return int(abs(((angle/100)*(maximum-zero))+zero))
