@@ -6,7 +6,7 @@ from Systems_Control import L298N_motorControl, MG995_servoControl, joystickToDi
 def moveXY(x, y):
     x = float(x)
     y = float(y)
-    motor_left_power, motor_right_power = joystickToDiff(x, y,-1,1,-1,1)
+    motor_right_power, motor_left_power = joystickToDiff(x, y,-1,1,-1,1)
     print(motor_left_power)
     print(motor_right_power)
     # Control the motors
