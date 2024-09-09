@@ -3,6 +3,7 @@
 import network
 import time
 import machine
+import math
 
 
 WIFI_SSID = 'PicoW_AP'
