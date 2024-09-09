@@ -9,6 +9,7 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -17,24 +18,31 @@ body {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    gap: 20px;
 }
+
+/* Joystick container */
 .joystick-container {
     position: relative;
-    width: 80%;
-    height: 80%;
+    width: 50%;
+    padding-bottom: 50%; /* Keeps the container square */
     max-width: 300px;
     max-height: 300px;
     background-color: #ddd;
     touch-action: none;
 }
+
+/* Vector display */
 .vector-display {
-    margin-top: 20px;
-    width: 30%;
-    padding-bottom: 30%; /* Ensures square shape */
+    position: relative;
+    width: 50%;
+    padding-bottom: 50%; /* Ensures square shape */
+    max-width: 300px;
     background-color: #f4f4f4;
     border: 2px solid #007bff;
-    position: relative;
 }
+
+/* Vector line and circle */
 .vector-line {
     width: 2px;
     height: 50%;
@@ -45,6 +53,7 @@ body {
     transform-origin: bottom center;
     transform: translateX(-50%);
 }
+
 .vector-circle {
     width: 10px;
     height: 10px;
@@ -54,20 +63,24 @@ body {
     left: 50%;
     transform: translate(-50%, 50%);
 }
+
+/* Slider and button containers */
 .slider-container, .button-container {
-    margin: 15px 0;
     width: 80%;
     max-width: 300px;
 }
+
 .slider-container input {
     width: 100%;
 }
+
 .button-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
 }
+
 .button-container button {
     padding: 10px 20px;
     border: none;
@@ -78,6 +91,7 @@ body {
     flex-grow: 1;
     flex-basis: 30%;
 }
+
 .button-container button:hover {
     background-color: #0056b3;
 }
@@ -85,9 +99,13 @@ body {
 @media (orientation: landscape) {
     .container {
         flex-direction: row;
+        flex-wrap: wrap; /* Allow elements to wrap into new rows in landscape mode */
+        gap: 50px;
     }
+
     .joystick-container, .vector-display {
         width: 50%;
-        padding-bottom: 50%; /* Keeps square shape */
+        padding-bottom: 0;
+        aspect-ratio: 1 / 1; /* Ensure square aspect ratio */
     }
 }

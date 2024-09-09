@@ -28,7 +28,7 @@ function updateVectorPosition(touch) {
     let y = (offsetY / containerRect.height) * 2 - 1;
 
     x = Math.max(-1, Math.min(1, x));
-    y = Math.max(-1, Math.min(1, y));
+    y = (Math.max(-1, Math.min(1, y)));
 
     let angle = Math.atan2(y, x) * (180 / Math.PI);
     let length = Math.sqrt(x * x + y * y);
@@ -37,7 +37,7 @@ function updateVectorPosition(touch) {
 
     const now = Date.now();
     if (now - lastSendTime > 250) {
-        sendGetRequest('/vector', { x: x.toFixed(2), y: y.toFixed(2) });
+        sendGetRequest('/vector', { x: x.toFixed(2), y: -y.toFixed(2) });
         lastSendTime = now;
     }
 }
@@ -99,6 +99,25 @@ document.getElementById("button4").addEventListener("click", function() {
 document.getElementById("button5").addEventListener("click", function() {
     sendGetRequest("/button5", { state: 'pressed' });
 });
+
+let lastKeyPressTime = 0;
+
+document.addEventListener('keydown', function(event) {
+    const now = Date.now();
+    if (now - lastKeyPressTime > 250) {
+        if (event.key === 'q') {
+            sendGetRequest("/button1", { state: 'pressed' });
+        } else if (event.key === 'w') {
+            sendGetRequest("/button2", { state: 'pressed' });
+        } else if (event.key === 'e') {
+            sendGetRequest("/button3", { state: 'pressed' });
+        } else if (event.key === 'r') {
+            sendGetRequest("/button4", { state: 'pressed' });
+        }
+        lastKeyPressTime = now;
+    }
+});
+
 
 window.addEventListener('resize', () => {
     containerRect = joystickContainer.getBoundingClientRect();

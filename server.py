@@ -1,7 +1,7 @@
 #-------------------------------------------- Imports ----------------------------------------------------------------
 
 import socket
-from start import  turn_on_led1, turn_off_led1, turn_on_led2, turn_off_led2, slider, joystick
+from start import  button_1, button_2, button_3, button_4, slider, joystick
 from RobotInteractions import *
 
 #-------------------------------------------- Server -----------------------------------------------------------------
@@ -41,35 +41,13 @@ def start_web_server():
         request_str = request.decode('utf-8')
         print(request_str)
 
-        if 'POST' in request_str:
-            parsed_data = parse_get_data(request)
-            if '/vector' in request_str:
-                x = parsed_data.get('x', 'not received')
-                y = parsed_data.get('y', 'not received')
-                print(f'Vector data - x: {x}, y: {y}')
-            elif '/slider' in request_str:
-                value = parsed_data.get('value', 'not received')
-                print(f'Slider data - value: {value}')
-            elif '/button1' in request_str:
-                turn_on_led1()
-                print('Button 1 pressed - LED 1 ON')
-            elif '/button2' in request_str:
-                turn_off_led1()
-                print('Button 2 pressed - LED 1 OFF')
-            elif '/button3' in request_str:
-                turn_on_led2()
-                print('Button 3 pressed - LED 2 ON')
-            elif '/button4' in request_str:
-                turn_off_led2()
-                print('Button 4 pressed - LED 2 OFF')
-
-        elif 'GET' in request_str:
+        if 'GET' in request_str:
             request_line = request_str.split('\r\n')[0]
             method, path, _ = request_line.split()
             query_string = path.split('?')[1] if '?' in path else ''
 
             parsed_data = parse_get_data(query_string)
-
+            response = "sucess"
             if '/vector' in path:
                 x = parsed_data.get('x', 'not received')
                 y = parsed_data.get('y', 'not received')
@@ -80,23 +58,23 @@ def start_web_server():
                 swingArm(value)
                 slider(value)
             elif '/button1' in path:
-                turn_on_led1()
+                button_1()
                 print('Button 1 pressed - LED 1 ON')
             elif '/button2' in path:
-                turn_off_led1()
+                button_2()
                 print('Button 2 pressed - LED 1 OFF')
             elif '/button3' in path:
-                turn_on_led2()
+                button_3()
                 print('Button 3 pressed - LED 2 ON')
             elif '/button4' in path:
-                turn_off_led2()
+                button_4()
                 print('Button 4 pressed - LED 2 OFF')
             elif '/button5' in path:
                 running = False
                 cl.close()
-                
                 break
-            if 'GET /style.css' in request_str:
+            
+            elif 'GET /style.css' in request_str:
                 response = serve_file('style.css', 'text/css')
             elif 'GET /script.js' in request_str:
                 response = serve_file('script.js', 'application/javascript')

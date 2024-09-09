@@ -4,18 +4,34 @@ from start import machine as m, MOTOR_PINS, time
 
 #-------------------------------------------- Motor Control -----------------------------------------------------------------
 
+
+
 def L298N_motorControl(speedval, motor: str, duration):
     pins = MOTOR_PINS[motor]
-    IN1 = m.Pin(pins[1], m.Pin.OUT)
-    IN2 = m.Pin(pins[2], m.Pin.OUT)
-    if speedval > 0: direction = "Forward"
-    elif speedval < 0: direction = "Backward"
-    else: direction = "Stop"
+    IN1 = m.Pin(pins[0], m.Pin.OUT)
+    IN2 = m.Pin(pins[1], m.Pin.OUT)
+    
+    # Create PWM object for speed control
+    speed_pwm = m.PWM(m.Pin(pins[2], m.Pin.OUT))
+    speed_pwm.freq(1000)
+    
+    if speedval > 0:
+        direction = "Forward"
+    elif speedval < 0:
+        direction = "Backward"
+    else:
+        direction = "Stop"
+    
+    # Convert speed value
+    speedval = convertSpeed(speedval)
+    
+    # Debugging
+    print(f"Motor: {motor}, Direction: {direction}, Speed Value: {speedval}")
+    
     if direction != "Stop":
-        speedval = convertSpeed(speedval)
-        speed = m.PWM(m.Pin(pins[0], m.Pin.OUT))
-        speed.freq(1000)
-        speed.duty_u16(speedval)
+        # Set PWM duty cycle
+        speed_pwm.duty_u16(speedval)
+    
     if direction == "Forward":
         IN1.low()
         IN2.high()
@@ -25,13 +41,19 @@ def L298N_motorControl(speedval, motor: str, duration):
     elif direction == "Stop":
         IN1.low()
         IN2.low()
+        # Stop PWM output
+        speed_pwm.duty_u16(0)
+    
     time.sleep_ms(duration)
 
 def convertSpeed(speed):
-    speed = int(abs(speed*65535))
-    if speed <= 65535: return speed 
-    elif speed > 65535: return 65535
-
+    speed = int(abs(speed) * 45535)
+   
+    if speed <= 65535:
+        return speed
+    else:
+        return 65535
+    
 def MG995_servoControl(angleval, motor: str, wait, Center:bool):
     pins = MOTOR_PINS[motor]
     if Center: angleval = convertDutyCentered(angleval, 4680, 3276)
